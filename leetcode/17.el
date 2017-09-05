@@ -1,13 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
 
+(require 'cl)
 (require 'names)
 (define-namespace leetcode-17-letter_combination
 
 (defun make-combination (curr-string input-seq letter-codes)
   (let* ((curr-char (car input-seq))
          (curr-candidates (alist-get curr-char letter-codes)))
-    (if (null curr-char) curr-string
-      (mapcar (lambda (elem)
+    (if (null curr-char) (list curr-string)
+      (cl-mapcan (lambda (elem)
                 (make-combination
                  (if (null curr-string) (list elem) (append curr-string (list elem)))
                  (cdr input-seq)
